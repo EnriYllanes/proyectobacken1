@@ -1,0 +1,24 @@
+{
+  "name": "backend-api-challenge",
+  "version": "1.0.0",
+  "description": "API para gestión de productos y carritos con Node.js y Express.",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

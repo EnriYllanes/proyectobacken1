@@ -1,0 +1,13 @@
+[
+  {
+    "id": "e36b3f40-7b31-441d-b0bb-8089914b94e2",
+    "title": "Pilas para Mouse",
+    "description": "El producto final.",
+    "code": "Pil0001",
+    "price": 100,
+    "status": true,
+    "stock": 5,
+    "category": "Final",
+    "thumbnails": []
+  }
+]
