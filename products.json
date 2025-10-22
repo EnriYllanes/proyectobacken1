@@ -9,5 +9,16 @@
     "stock": 5,
     "category": "Final",
     "thumbnails": []
+  },
+  {
+    "id": "4d29d0ee-4e88-475a-8498-60561a1001b9",
+    "title": "tablet",
+    "description": "17\"",
+    "code": "tab0001",
+    "price": 40000,
+    "status": true,
+    "stock": 5,
+    "category": "tasblet",
+    "thumbnails": []
   }
 ]

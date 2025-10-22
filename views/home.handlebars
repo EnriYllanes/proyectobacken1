@@ -1,0 +1,14 @@
+<h1>Listado de Productos</h1>
+<a href="/realtimeproducts">Ver la versión en tiempo real (WebSockets)</a>
+<hr>
+<ul>
+    {{#each products}}
+        <li>
+            <strong>{{this.title}}</strong> (Código: {{this.code}}) - ${{this.price}}
+            <br>
+            Stock: {{this.stock}} | ID: {{this.id}}
+        </li>
+    {{else}}
+        <li>No hay productos para mostrar.</li>
+    {{/each}}
+</ul>

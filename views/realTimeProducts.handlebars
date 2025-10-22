@@ -1,0 +1,24 @@
+<h1>Productos en Tiempo Real 🔄</h1>
+
+<p>Los cambios realizados aquí se reflejarán automáticamente en todos los clientes conectados.</p>
+<hr>
+
+<h2>Añadir Nuevo Producto (vía WebSocket)</h2>
+<form id="productForm">
+    <input type="text" id="title" placeholder="Título" required><br>
+    <input type="text" id="description" placeholder="Descripción" required><br>
+    <input type="text" id="code" placeholder="Código" required><br>
+    <input type="number" id="price" placeholder="Precio" required><br>
+    <input type="number" id="stock" placeholder="Stock" required><br>
+    <input type="text" id="category" placeholder="Categoría" required><br>
+    <button type="submit">Agregar Producto</button>
+</form>
+
+<hr>
+
+<h2>Lista Actualizada de Productos</h2>
+<ul id="productList">
+    </ul>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTime.js"></script>
