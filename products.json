@@ -20,5 +20,139 @@
     "stock": 5,
     "category": "tasblet",
     "thumbnails": []
+  },
+  {
+    "id": "9f4fd137-81bc-4e3c-bc06-65de55820749",
+    "title": "Monitor Gamer 27'",
+    "description": "Monitor LED curvo de alta tasa de refresco.",
+    "code": "MNR001",
+    "price": 350,
+    "status": true,
+    "stock": 15,
+    "category": "Electronica",
+    "thumbnails": []
+  },
+  {
+    "id": "65da3746-f49b-41bf-8119-05abd8fd2656",
+    "title": "Mouse Gamer Full",
+    "description": " Mouse para video Juegos",
+    "code": "MOU1000",
+    "price": 70,
+    "status": true,
+    "stock": 40,
+    "category": "Mouse",
+    "thumbnails": []
+  },
+  {
+    "id": "9c868019-6476-432b-9666-76bd58c5e3f2",
+    "title": "MousePad 70x30",
+    "description": "Pad para mouse y teclado",
+    "code": "MouPa1000",
+    "price": 50,
+    "status": true,
+    "stock": 50,
+    "category": "Pads",
+    "thumbnails": []
+  },
+  {
+    "id": "141c9441-db99-446a-b91b-f9d21d358bf2",
+    "title": "Mouse Genius",
+    "description": "Mouse de escritorio",
+    "code": "MOU1001",
+    "price": 15,
+    "status": true,
+    "stock": 70,
+    "category": "Mouse",
+    "thumbnails": []
+  },
+  {
+    "id": "a2589758-5f0a-4bfa-8a2d-3bade8c70056",
+    "title": "Teclado Gamer Led",
+    "description": "Teclado gamer intermedio",
+    "code": "Tec1000",
+    "price": 48,
+    "status": true,
+    "stock": 30,
+    "category": "TECLADOS",
+    "thumbnails": []
+  },
+  {
+    "id": "c82ab508-ab44-4238-9e03-db58a3ccfd6e",
+    "title": "Teclado Gamer Pro",
+    "description": "Teclado de alta definicion Gamer",
+    "code": "TEC1001",
+    "price": 90,
+    "status": true,
+    "stock": 40,
+    "category": "TECLADOS",
+    "thumbnails": []
+  },
+  {
+    "id": "5c1e4e23-b52e-4d54-a23c-c4c9d0ffea45",
+    "title": "Fuente Gamer 6400",
+    "description": "Fuente PC pro",
+    "code": "FUEN1000",
+    "price": 120,
+    "status": true,
+    "stock": 20,
+    "category": "Fuentes",
+    "thumbnails": []
+  },
+  {
+    "id": "ca18e480-ddf5-44a4-af12-071387c75f55",
+    "title": "Disco SSD 480",
+    "description": "Disco SSD",
+    "code": "Dis1000",
+    "price": 68,
+    "status": true,
+    "stock": 25,
+    "category": "MEMORIAS ALMACENAMIENTO",
+    "thumbnails": []
+  },
+  {
+    "id": "93a49b6b-3886-442a-b6ca-f05d793a3f9f",
+    "title": "Disco SSD 1TB",
+    "description": "Disco SSD",
+    "code": "Dis1001",
+    "price": 140,
+    "status": true,
+    "stock": 30,
+    "category": "MEMORIAS ALMACENAMIENTO",
+    "thumbnails": []
+  },
+  {
+    "id": "3e8e812a-02f6-4464-830a-53aa52009aa3",
+    "title": "Disco M.2 1TB",
+    "description": "Disco M.2",
+    "code": "Dis1002",
+    "price": 205,
+    "status": true,
+    "stock": 15,
+    "category": "MEMORIAS ALMACENAMIENTO",
+    "thumbnails": []
+  },
+  {
+    "id": "4c9e7d45-2532-49fb-bdc3-9edf7e11e55a",
+    "title": "Disco M.2 500Gb",
+    "description": "Disco M.2",
+    "code": "Dis1003",
+    "price": 110,
+    "status": true,
+    "stock": 10,
+    "category": "MEMORIAS ALMACENAMIENTO",
+    "thumbnails": []
+  },
+  {
+    "id": "bf292507-36a2-473d-ad57-129ae2d2ec40",
+    "title": "Mouse Inalámbrico",
+    "description": "Mouse ergonómico de alta precisión con tecnología bluetooth.",
+    "code": "MOU1004",
+    "price": 25,
+    "status": true,
+    "stock": 50,
+    "category": "Periféricos",
+    "thumbnails": [
+      "/img/mouse-wireless.jpg"
+    ]
   }
 ]

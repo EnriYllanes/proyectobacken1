@@ -1,0 +1,62 @@
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6 text-indigo-700">Carrito ID: {{cart._id}}</h1>
+    
+    <!-- Barra de Estado y Mensajes -->
+    <div id="status-message" class="transition-all duration-300"></div>
+
+    {{#if cart.products.length}}
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Productos en el Carrito</h2>
+            
+            <ul class="space-y-4">
+                {{#each cart.products}}
+                <li class="flex justify-between items-center border-b pb-4 last:border-b-0">
+                    <div class="flex items-center space-x-4">
+                        <!-- Gracias al populate, accedemos a la información completa -->
+                        <div>
+                            <p class="text-lg font-medium text-gray-900">{{this.product.title}}</p>
+                            <p class="text-sm text-gray-500">Categoría: {{this.product.category}}</p>
+                            <p class="text-md font-bold text-green-600">Precio unitario: ${{this.product.price}}</p>
+                            <p class="text-md text-gray-600">Cantidad: {{this.quantity}}</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <!-- Botón para eliminar producto -->
+                        <button 
+                            onclick="removeProduct('{{../cart._id}}', '{{this.product._id}}')"
+                            class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200 text-sm"
+                        >
+                            Eliminar
+                        </button>
+
+                        <!-- Tarea pendiente: Botón para actualizar cantidad (PUT) -->
+                        <button 
+                            onclick="alert('Funcionalidad de actualizar cantidad (PUT) aún no implementada en el frontend.')"
+                            class="p-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200 text-sm"
+                        >
+                            + / -
+                        </button>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        
+        <!-- Botón para vaciar todo el carrito -->
+        <div class="mt-6 flex justify-end">
+            <button 
+                onclick="clearCart('{{cart._id}}')"
+                class="px-6 py-3 bg-red-700 text-white rounded-lg font-semibold hover:bg-red-800 transition duration-200 shadow-lg"
+            >
+                Vaciar Carrito Completo
+            </button>
+        </div>
+
+    {{else}}
+        <p class="text-xl text-gray-500 text-center py-10 bg-white rounded-xl shadow-lg">El carrito está vacío.</p>
+    {{/if}}
+
+</div>
+
+<!-- Asegúrate de tener el script del carrito cargado -->
+<script src="/js/cart.js"></script>

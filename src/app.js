@@ -6,6 +6,9 @@ import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js'; // 4. Nuevo Router para las Vistas
 import ProductManager from './managers/ProductManager.js'; 
+import mongoose from 'mongoose';
+import ProductModel from './models/Product.model.js';
+import CartModel from './models/Cart.model.js';
 
 
 const app = express();
@@ -23,7 +26,25 @@ const io = new Server(httpServer);
 app.engine('handlebars', handlebars.engine());
 app.set('views', 'views'); // La carpeta 'views' contiene los archivos .handlebars
 app.set('view engine', 'handlebars');
+app.engine('handlebars', handlebars.engine({
+    helpers: {
+        multiply: (a, b) => a * b
+    }
+}));
 // -----------------------------------
+
+// CONECTAR A MONGODB
+try {
+    await mongoose.connect('mongodb+srv://enriyllanes_db_user:WiY632mkcsR7FOIU@cluster0.rksudtt.mongodb.net/?appName=Cluster0', {
+        dbName: 'ecommerce', // Define el nombre de tu base de datos
+    });
+    console.log("✅ Conexión exitosa a la base de datos de MongoDB.");
+} catch (error) {
+    console.error("❌ No se pudo conectar a la base de datos:", error);
+    process.exit(1);
+}
+// -----------------------------------
+
 
 // --- Middlewares y Archivos estáticos ---
 app.use(express.json());
@@ -34,7 +55,7 @@ app.use(express.static('public'));
 
 // --- Rutas ---
 // Rutas de API (devuelven JSON)
-app.use('/api/products', productsRouter); 
+app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 
 // Ruta de Vistas (devuelven HTML renderizado por Handlebars)

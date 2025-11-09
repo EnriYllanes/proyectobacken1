@@ -1,95 +1,94 @@
 import { Router } from 'express';
-import ProductManager from '../managers/ProductManager.js';
+import ProductService from '../dao/Product.service.js';
 
 const router = Router();
-const productManager = new ProductManager();
+const productService = ProductService;
 
-// Endpoint para obtener todos los productos (GET /api/products)
+// Función auxiliar para construir el link
+const buildLink = (baseUrl, page, limit, sort, query) => {
+    // Reconstruye la URL base sin 'page'
+    const params = new URLSearchParams();
+    if (limit) params.set('limit', limit);
+    if (sort) params.set('sort', sort);
+    // Añadir el query de manera genérica
+    if (query) {
+        // query puede ser complejo (category=X, status=Y), lo manejamos en el router
+        for (const key in query) {
+            params.set(key, query[key]);
+        }
+    }
+    
+    // Si la página es válida (mayor que 0), la incluimos
+    if (page && page > 0) {
+        params.set('page', page);
+    } else if (page === null) {
+        return null;
+    }
+
+    return `${baseUrl}?${params.toString()}`;
+};
+
+// GET /api/products
+// Recibe: limit, page, sort, query
 router.get('/', async (req, res) => {
     try {
-        // En este punto, getProducts() solo devuelve el array puro.
-        const products = await productManager.getProducts();
+        const { limit, page, sort, ...query } = req.query; // Captura el resto como 'query'
 
-        // El router envuelve la respuesta en el formato de éxito estándar.
-        res.send({ status: 'éxito', payload: products });
-    } catch (error) {
-        console.error("Error al obtener productos:", error);
-        res.status(500).send({
-            status: "error",
-            error: "Error interno del servidor al obtener productos"
+        const options = { limit, page, sort, query };
+
+        // Obtener resultados paginados del servicio
+        const result = await productService.getPaginatedProducts(options);
+        
+        // Determinar la URL base (asumiendo que la ruta es '/api/products')
+        // req.baseUrl es '/api', req.path es '/products', pero para los links solo necesitamos el path base: '/api/products'
+        const baseUrl = `${req.protocol}://${req.get('host')}${req.baseUrl}`; 
+
+        // Construir los links
+        const prevLinkPage = result.prevPage ? result.prevPage : null;
+        const nextLinkPage = result.nextPage ? result.nextPage : null;
+        
+        const prevLink = result.hasPrevPage
+            ? buildLink(baseUrl, prevLinkPage, limit, sort, query)
+            : null;
+
+        const nextLink = result.hasNextPage
+            ? buildLink(baseUrl, nextLinkPage, limit, sort, query)
+            : null;
+
+
+        // Devolver el objeto con el formato solicitado
+        res.status(200).json({
+            status: 'success',
+            payload: result.docs,
+            totalPages: result.totalPages,
+            prevPage: result.prevPage,
+            nextPage: result.nextPage,
+            page: result.page,
+            hasPrevPage: result.hasPrevPage,
+            hasNextPage: result.hasNextPage,
+            prevLink: prevLink,
+            nextLink: nextLink,
         });
+
+    } catch (error) {
+        console.error('Error al obtener productos paginados:', error);
+        res.status(500).json({ status: 'error', message: 'Error interno del servidor al obtener productos.', error: error.message });
     }
 });
 
-// Endpoint para obtener un producto por ID (GET /api/products/:pid)
+// GET /api/products/:pid (sin cambios, para llevar a la vista de detalle)
 router.get('/:pid', async (req, res) => {
     try {
-        const { pid } = req.params;
-        const product = await productManager.getProductById(pid);
-
-        if (!product) {
-            return res.status(404).send({ status: "error", error: "Producto no encontrado." });
-        }
-
-        res.send({ status: 'éxito', payload: product });
-    } catch (error) {
-        console.error("Error al obtener producto por ID:", error);
-        res.status(500).send({ status: "error", error: "Error interno del servidor." });
-    }
-});
-
-// Endpoint para agregar un nuevo producto (POST /api/products)
-router.post('/', async (req, res) => {
-    try {
-        const newProductData = req.body;
-        
-        // El Manager se encarga de las validaciones y de generar el ID único
-        const newProduct = await productManager.addProduct(newProductData);
-
-        // 201 Created para indicar que el recurso fue creado exitosamente
-        res.status(201).send({ status: "éxito", payload: newProduct });
-    } catch (error) {
-        // 400 Bad Request para errores de validación (ej: campos faltantes, código repetido)
-        console.error("Error al agregar producto:", error.message);
-        res.status(400).send({ status: "error", error: error.message });
-    }
-});
-
-// Endpoint para actualizar un producto (PUT /api/products/:pid)
-router.put('/:pid', async (req, res) => {
-    try {
-        const { pid } = req.params;
-        const fieldsToUpdate = req.body;
-
-        const updatedProduct = await productManager.updateProduct(pid, fieldsToUpdate);
-        
-        res.send({ status: "éxito", payload: updatedProduct });
+        const product = await productService.getProductById(req.params.pid);
+        res.status(200).json({ status: 'success', payload: product });
     } catch (error) {
         if (error.message.includes('no encontrado')) {
-            return res.status(404).send({ status: "error", error: error.message });
+            return res.status(404).json({ status: 'error', message: error.message });
         }
-        // 400 para errores de validación (ej: intentar cambiar el ID)
-        res.status(400).send({ status: "error", error: error.message });
+        res.status(500).json({ status: 'error', message: 'Error interno del servidor.' });
     }
 });
 
-// Endpoint para eliminar un producto (DELETE /api/products/:pid)
-router.delete('/:pid', async (req, res) => {
-    try {
-        const { pid } = req.params;
-        
-        await productManager.deleteProduct(pid);
-        
-        res.send({ status: "éxito", message: `Producto con ID ${pid} eliminado correctamente.` });
-    } catch (error) {
-        if (error.message.includes('no encontrado')) {
-            return res.status(404).send({ status: "error", error: error.message });
-        }
-        console.error("Error al eliminar producto:", error);
-        res.status(500).send({ status: "error", error: "Error interno del servidor." });
-    }
-});
-
-// aca es donde van a ir las rutas POST, PUT, DELETE y GET por ID!
+// Aquí irían tus rutas POST, PUT, DELETE para productos, si es que las tienes
 
 export default router;
